@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name: Artly Core
- * Description: This is exdos theme core plugin for widget development.
- * Plugin URI:  https://elementor.com/exdos
+ * Description: This is arlty theme core plugin for widget development.
+ * Plugin URI:  https://elementor.com/artly
  * Version:     1.0.0
  * Author:      Web Artistry
  * Author URI:  https://web-artistry.com/

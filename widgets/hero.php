@@ -305,11 +305,11 @@ class Artly_Hero extends Widget_Base {
 
 			<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative " style="background-image: url(<?php echo esc_url($settings['bg_image'] ['url']); ?>);">
 			<div class="tp-hero-shape">
-					<img class="tp-hero-shape-1 p-absolute" src="assets/img/shape/hero-1-ball-shape.png" alt="">
-					<img class="tp-hero-shape-2 p-absolute d-none d-xl-block" src="assets/img/shape/hero-1-large-shape.png" alt="">
-					<img class="tp-hero-shape-3 p-absolute" src="assets/img/shape/hero-sm-circle.png" alt="">
-					<img class="tp-hero-shape-4 p-absolute d-none d-md-block" src="assets/img/shape/hero-1-shape-2.png" alt="">
-					<img class="tp-hero-shape-5 p-absolute d-none d-md-block" src="assets/img/shape/hero-1-circle-3.png" alt="">
+					<img class="tp-hero-shape-1 p-absolute" src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/hero-1-ball-shape.png" alt="">
+					<img class="tp-hero-shape-2 p-absolute d-none d-xl-block" src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/hero-1-large-shape.png" alt="">
+					<img class="tp-hero-shape-3 p-absolute" src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/hero-sm-circle.png" alt="">
+					<img class="tp-hero-shape-4 p-absolute d-none d-md-block" src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/hero-1-shape-2.png" alt="">
+					<img class="tp-hero-shape-5 p-absolute d-none d-md-block" src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/hero-1-circle-3.png" alt="">
 			</div>
 			<div class="hero-info d-none d-xxl-flex">
 					<div class="hero-social">
