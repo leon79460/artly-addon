@@ -303,7 +303,7 @@ class Artly_Hero extends Widget_Base {
 
 		?>
 
-			<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative " style="background-image: url(assets/img/shape/hero-1-bg-shape.png);">
+			<section class="tp-hero-area tp-hero-space tp-black-bg pt-265 pb-170 p-relative " style="background-image: url(<?php echo esc_url($settings['bg_image'] ['url']); ?>);">
 			<div class="tp-hero-shape">
 					<img class="tp-hero-shape-1 p-absolute" src="assets/img/shape/hero-1-ball-shape.png" alt="">
 					<img class="tp-hero-shape-2 p-absolute d-none d-xl-block" src="assets/img/shape/hero-1-large-shape.png" alt="">
@@ -313,15 +313,17 @@ class Artly_Hero extends Widget_Base {
 			</div>
 			<div class="hero-info d-none d-xxl-flex">
 					<div class="hero-social">
-							<span>Follow Us - </span>
+							<span> <?php echo esc_html__('Follow Us', 'artly-core'); ?> - </span>
 
 							<?php foreach($settings['social_list'] as $item) : ?>
 							<a href="<?php echo esc_url($item['social_url']); ?>"><?php echo esc_html($item['social_name']); ?> </a>
 							<?php endforeach; ?>
 					</div>
+					<?php if(!empty($settings['social_content'])) : ?> 
 					<div class="hero-info-text">
 							<span> <?php echo esc_html($settings['social_content']); ?> </span>
 					</div>
+					<?php endif ?>
 			</div>
 			<div class="container">
 					<div class="tp-hero p-relative z-index-11">
