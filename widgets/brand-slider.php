@@ -104,7 +104,7 @@ class Artly_Brand_Slider extends Widget_Base {
 	// register_controls_section
 	protected function register_controls_section() {
 
-		// Project reapeter
+		// Brand Selection section 
 		$this->start_controls_section(
 			'slider_selection_section',
 			[
@@ -211,7 +211,8 @@ class Artly_Brand_Slider extends Widget_Base {
 		?>
 
 		<?php if($settings['layout'] == 'style-2' ) : ?>
-				<div class="tp-brand-area tp-blue-bg pt-40 pb-40">
+
+		<div class="tp-brand-area tp-blue-bg pt-40 pb-40">
 			<div class="tp-brand-wrapper">
 					<div dir="rtl" class="swiper tp-brand-bottom-active">
 							<div class="swiper-wrapper tp-slide-transtion">
