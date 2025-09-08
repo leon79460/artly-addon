@@ -188,7 +188,7 @@ class Artly_Team extends Widget_Base {
 		);
 
 		$this->end_controls_section();
-		
+
 	}
 
 	// style_tab_content 
@@ -234,10 +234,10 @@ class Artly_Team extends Widget_Base {
 								<div class="col-xl-3 col-lg-4 col-md-6">
 									<div class="tpteam mb-60">
 											<div class="tpteam__thumb br-15 wow img-custom-anim-top" data-wow-duration="1s" data-wow-delay="0.2s">
-													<a href="team-details.html"><img src="<?php echo esc_url($item['image']['url']); ?>" alt=""></a>
+													<a href="<?php echo esc_url($item['team_url']['url']); ?>"><img src="<?php echo esc_url($item['image']['url']); ?>" alt=""></a>
 											</div>
 											<div class="tpteam__info mt-30 ml-80">
-													<h3 class="tpteam__title"><a href="team-details.html"><?php echo esc_html($item['team_name']); ?></a></h3>
+													<h3 class="tpteam__title"><a href="<?php echo esc_url($item['team_url']['url']); ?>"><?php echo esc_html($item['team_name']); ?></a></h3>
 													<span class="ml-45"><i></i> <?php echo esc_html($item['team_bio']); ?></span>
 
 													<div class="tpteam__social mt-20">

@@ -103,6 +103,7 @@ class Plugin {
 	 */
 	public function register_widgets( $widgets_manager ) {
 		// Its is now safe to include Widgets files
+		require_once( __DIR__ . '/widgets/blog-post.php' );
 		require_once( __DIR__ . '/widgets/team.php' );
 		require_once( __DIR__ . '/widgets/brand-slider.php' );
 		require_once( __DIR__ . '/widgets/project-tab.php' );
@@ -145,7 +146,7 @@ class Plugin {
 		$harry_add_cat_manager->add_category(
 			'arlty-category',
 			[
-				'title' => esc_html__( 'Artly Core', 'harry-core' ),
+				'title' => esc_html__( 'Artly Core', 'artly-core' ),
 				'icon' => 'fa fa-plug',
 			]
 		);

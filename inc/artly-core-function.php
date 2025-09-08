@@ -1,5 +1,21 @@
 <?php
 
+    // get all category 
+function post_cat($category = 'category'){
+
+    $categories = get_categories( array(
+        'taxonomy' => $category,
+        'orderby' => 'name',
+        'order'   => 'ASC',
+    ) );
+    
+    $cat_list = [];
+    foreach($categories as $cat){
+        $cat_list[$cat->slug] = $cat->name;
+    }
+    return $cat_list;
+}
+
 /**
 * Sanitize SVG markup for front-end display.
 *
