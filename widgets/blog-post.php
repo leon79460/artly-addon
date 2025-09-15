@@ -111,6 +111,15 @@ class Artly_Blog extends Widget_Base {
 		);
 
 		$this->add_control(
+		'post_per_page',
+			[
+				'label' => esc_html__( 'Post Number', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::NUMBER,
+				'default' => 3,
+			]
+		);
+
+		$this->add_control(
 			'cat_include',
 			[
 				'label' => esc_html__( 'Category Include', 'textdomain' ),
@@ -133,24 +142,57 @@ class Artly_Blog extends Widget_Base {
 		);
 
 		$this->add_control(
-			'artly_title',
+			'post_include',
 			[
-				'label' => __( 'Main Title', 'artly-core' ),
-				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Popular services', 'artly-core' ),
+				'label' => esc_html__( 'Post Include', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT2,
 				'label_block' => true,
+				'multiple' => true,
+				'options' => get_all_post(),
+			]
+		); 
+
+		$this->add_control(
+			'post_exclude',
+			[
+				'label' => esc_html__( 'Post Exclude', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT2,
+				'label_block' => true,
+				'multiple' => true,
+				'options' => get_all_post(),
 			]
 		);
 
 		$this->add_control(
-			'artly_content',
+			'order',
 			[
-				'label' => esc_html__( 'Description', 'artly-core' ),
-				'type' => \Elementor\Controls_Manager::TEXTAREA,
-				'rows' => 7,
-				'default' => esc_html__( 'Per ipsum ultrices sollicitudin iaculis platea facilisi semper aliquam up
-         senectus cursus vivamus volutpat penatibus', 'artly-core' ),
-				'placeholder' => esc_html__( 'Type your description here', 'artly-core' ),
+				'label' => esc_html__( 'Order', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'asc',
+				'options' => [
+					'asc' => esc_html__( 'ASC', 'textdomain' ),
+					'desc' => esc_html__( 'DESC', 'textdomain' ),
+				]
+			]
+		);
+
+		$this->add_control(
+			'order_by',
+			[
+				'label' => esc_html__( 'Order By', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'title',
+				'options' => [
+			        'ID' => 'Post ID',
+			        'author' => 'Post Author',
+			        'title' => 'Title',
+			        'date' => 'Date',
+			        'modified' => 'Last Modified Date',
+			        'parent' => 'Parent Id',
+			        'rand' => 'Random',
+			        'comment_count' => 'Comment Count',
+			        'menu_order' => 'Menu Order',
+				],
 			]
 		);
 
@@ -199,20 +241,47 @@ class Artly_Blog extends Widget_Base {
 	 * @access protected
 	 */
 	protected function render() {
-		$settings = $this->get_settings_for_display();
+    $settings = $this->get_settings_for_display();
 
-		$args = array(
+    $args = array(
 			'post_type' => 'post',
-			'posts_per_page' => 3,
-			'orderby' => 'ASC',
-			'order' => 'date',
-			// 'offset' => $offset,
-			// 'post__not_in'=> $settings['post_exclude'],
-			// 'post__in'=> $settings['post_inlude'],
-			// 'ignore_sticky_posts' => $ignore_sticky_posts
-		);
+			'posts_per_page' => $settings['post_per_page'],
+			'orderby' => $settings['order_by'],
+			'order' => $settings['order'],
+			'post__not_in'=> $settings['post_exclude'],
+			'post__in'=> $settings['post_include'],
+    );
 
-		$query = new \WP_Query( $args );
+				if(!empty($settings['cat_include'] && !empty($settings['cat_exclude']) )){
+			$args['tax_query'] = array(
+				'relation' => 'AND',
+				array(
+					'taxonomy' => 'category',
+					'field' => 'slug',
+					'terms' => $settings['cat_include'],
+					'operator' => 'IN',
+				),
+				array(
+					'taxonomy' => 'category',
+					'field' => 'slug',
+					'terms' => $settings['cat_exclude'],
+					'operator' => 'NOT IN',
+				),
+			);
+		}
+		elseif ( ! empty( $settings['cat_include'] ) || ! empty( $settings['cat_exclude'] ) ) {
+				$args['tax_query'] = array(
+						array(
+								'taxonomy' => 'category',
+								'field'    => 'slug',
+								'terms'    => ! empty( $settings['cat_exclude'] ) ? $settings['cat_exclude'] : $settings['cat_include'],
+								'operator' => ! empty( $settings['cat_exclude'] ) ? 'NOT IN' : 'IN',
+						),
+				);
+		}
+
+    $query = new \WP_Query( $args );
+
 
 		// $args = [
     //         'post_type' => 'post',
@@ -231,50 +300,51 @@ class Artly_Blog extends Widget_Base {
 		//             'operator' => 'NOT EXISTS',
 	  //           ],
     //         ],
-
     //         'ignore_sticky_posts' => 1,
     //     ];
 
-		?>
+    ?>
 
-    <?php if ( $query->have_posts() ) : ?>
-    <?php while ( $query->have_posts() ) : $query->the_post(); 
-		$category = get_the_category(get_the_ID()); 
-		?>
+    <section class="tp-blog-post-area pt-130 pb-90">
+        <div class="container">
+            <div class="row">
+                <?php if ( $query->have_posts() ) : ?>
+                    <?php while ( $query->have_posts() ) : $query->the_post(); ?>
+                    <?php $category = get_the_category(get_the_ID()); ?>
 
+                        <div class="col-xl-4 col-lg-4 col-md-6">
+                            <div class="tpblog mb-40">
+                                <div class="tpblog__thumb br-20 mb-35 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
+                                    <a href="<?php the_permalink(); ?>">
+                                        <?php the_post_thumbnail(); ?>
+                                    </a>
+                                </div>
+                                <div class="tpblog__content pl-30">
+                                    <div class="tpblog__meta mb-15">
+                                        <span><a href="#"><i class="fal fa-calendar-alt"></i> <?php echo get_the_date(); ?></a></span>
+                                        <cite></cite>
 
-		<div class="tp-blog-post-area pt-130 pb-90">
-				<div class="container">
-						<div class="row">
-								<div class="col-xl-4 col-lg-4 col-md-6">
-										<div class="tpblog mb-40">
-												<div class="tpblog__thumb br-20 mb-35 wow img-custom-anim-top" data-wow-duration="1.5s" data-wow-delay="0.1s">
-														<a href="<?php the_permalink(); ?>"> <?php the_post_thumbnail(); ?> </a>
-												</div>
-												<div class="tpblog__content pl-30">
-														<div class="tpblog__meta mb-15">
-																<span><a href="#"><i class="fal fa-calendar-alt"></i> <?php echo get_the_date(); ?> </a></span>
-																<cite></cite>
-																<span><a href="#"><i class="fal fa-certificate"></i> <?php echo esc_html($category['0']->name); ?> </a></span>
-														</div>
-														<h3 class="tpblog__title mb-25">
-																<a href="<?php the_permalink(); ?>"> <?php the_title(); ?> </a>
-														</h3>
-														<div class="tpblog__btn">
-																<a class="tp-text-btn" href="<?php the_permalink(); ?>">Read More <i class="far fa-arrow-right"></i></a>
-														</div>
-												</div>
-										</div>
-								</div>
-						</div>
-				</div>
-    </div>
+                                        <span><a href="#"><i class="fal fa-certificate"></i> <?php echo esc_html($category['0']->name); ?> </a></span>
 
-		<?php endwhile; wp_reset_postdata(); ?>
-		<?php endif; ?>
+                                    </div>
+                                    <h3 class="tpblog__title mb-25">
+                                        <a href="<?php the_permalink(); ?>"> <?php the_title(); ?></a>
+                                    </h3>
+                                    <div class="tpblog__btn">
+                                        <a class="tp-text-btn" href="<?php the_permalink(); ?>"> Read More <i class="far fa-arrow-right"></i></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endwhile; wp_reset_postdata(); ?>
+                <?php endif; ?>
+            </div>
+        </div>
+    </section>
 
-		<?php 
-	}
+    <?php 
+}
+
 
 }
 

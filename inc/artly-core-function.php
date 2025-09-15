@@ -1,6 +1,6 @@
 <?php
 
-    // get all category 
+   // get all category 
 function post_cat($category = 'category'){
 
     $categories = get_categories( array(
@@ -15,6 +15,22 @@ function post_cat($category = 'category'){
     }
     return $cat_list;
 }
+
+// get all post 
+function get_all_post($post_type_name = 'post'){
+    $posts = get_posts( array(
+        'post_type' => $post_type_name,
+        'orderby' => 'name',
+        'order'   => 'ASC'
+    ) );
+    $posts_list = [];
+    foreach($posts as $post){
+        $posts_list[$post->ID] = $post->post_title;
+    }
+    return $posts_list;
+}
+
+
 
 /**
 * Sanitize SVG markup for front-end display.
