@@ -305,7 +305,7 @@ class Artly_Blog extends Widget_Base {
 
     ?>
 
-    <section class="tp-blog-post-area pt-130 pb-90">
+    <section class="tp-blog-post-area ">
         <div class="container">
             <div class="row">
                 <?php if ( $query->have_posts() ) : ?>
