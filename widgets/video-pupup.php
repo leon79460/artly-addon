@@ -103,10 +103,36 @@ class Artly_Video_Popup extends Widget_Base {
 
 	// register_controls_section
 	protected function register_controls_section() {
+
+		// video Selection section 
+		$this->start_controls_section(
+			'slider_selection_section',
+			[
+				'label' => esc_html__( 'Design Style', 'artly-core' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout Style', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'style-1',
+				'options' => [
+					'style-1' => esc_html__( 'Layout 1', 'textdomain' ),
+					'style-2'  => esc_html__( 'Layout 2', 'textdomain' ),
+					],
+			]
+		);
+
+		$this->end_controls_section();
+
+
 		$this->start_controls_section(
 			'video_popup_section',
 			[
-				'label' => __( 'Title and Content', 'artly-core' ),
+				'label' => __( 'Video Details', 'artly-core' ),
 			]
 		);
 
@@ -117,6 +143,9 @@ class Artly_Video_Popup extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Intro video', 'artly-core' ),
 				'label_block' => true,
+				'condition' => [
+					'layout' => 'style-1',
+				],
 			]
 		);
 
@@ -131,7 +160,34 @@ class Artly_Video_Popup extends Widget_Base {
 
 		$this->end_controls_section();
 
+
+	//Image for background style 2
+		$this->start_controls_section(
+			'image_section',
+			[
+				'label' => esc_html__( 'Image', 'textdomain' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout' => 'style-2',
+				],
+			]
+		);
+
+		$this->add_control(
+			'image',
+			[
+				'label' => esc_html__( 'Choose Image', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+
+		$this->end_controls_section();
+
 	}
+
 
 	// style_tab_content 
 	protected function style_tab_content() {
@@ -175,28 +231,40 @@ class Artly_Video_Popup extends Widget_Base {
 	 */
 	protected function render() {
 		$settings = $this->get_settings_for_display();
-
 		?>
 
-		<?php if(!empty($settings['video_popup_url'])) : ?>
-				<div class="tp-about-video-info d-flex align-items-center mb-27">
-						<div class="tp-about-video-icon mr-15">
-								<a class="popup-video" href="<?php echo esc_url($settings['video_popup_url']); ?>"><img src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/play.svg" alt=""></a>
-						</div>
-
-						<?php if(!empty($settings['video_popup_title'])) : ?>
-							<h4 class="m-0"><?php echo artly_core_kses($settings['video_popup_title']); ?></h4>
-						<?php endif; ?>	
+		<?php if ( $settings['layout'] === 'style-2' ) : ?>
+			<div class="tp-video-area jarallax" style="background-image: url(<?php echo esc_url($settings['image']['url']); ?>);">
+				<div class="tp-play-btn text-center">
+					<?php if ( ! empty($settings['video_popup_url']) ) : ?>
+						<a class="popup-video" href="<?php echo esc_url($settings['video_popup_url']); ?>">
+							<img src="<?php echo get_template_directory_uri(); ?>/assets/img/icon/play.png" alt="Play Video">
+						</a>
+					<?php endif; ?>
 				</div>
-		<?php endif; ?>	
+			</div>
 
-		<?php 
+		<?php else : ?>
 
+			<?php if ( ! empty($settings['video_popup_url']) ) : ?>
+				<div class="tp-about-video-info d-flex align-items-center mb-27">
+					<div class="tp-about-video-icon mr-15">
+						<a class="popup-video" href="<?php echo esc_url($settings['video_popup_url']); ?>" data-type="iframe">
+							<img src="<?php echo get_template_directory_uri(); ?>/assets/img/shape/play.svg" alt="Play Video">
+						</a>
+					</div>
 
+					<?php if ( ! empty($settings['video_popup_title']) ) : ?>
+						<h4 class="m-0"><?php echo esc_html($settings['video_popup_title']); ?></h4>
+					<?php endif; ?>
+				</div>
+			<?php endif; ?>
 
+		<?php endif; ?>
+
+		<?php
 	}
 
 }
-
 
 $widgets_manager->register( new Artly_Video_Popup() );
