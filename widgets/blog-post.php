@@ -336,7 +336,7 @@ class Artly_Blog extends Widget_Base {
                                 </div>
                             </div>
                         </div>
-                    <?php endwhile; wp_reset_postdata(); ?>
+                    <?php endwhile; wp_reset_postdata();  ?>
                 <?php endif; ?>
             </div>
         </div>

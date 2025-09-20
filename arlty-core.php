@@ -14,6 +14,7 @@
 if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
 
 
+include_once('inc/portfolio-post-type.php');
 include_once('inc/artly-core-function.php');
 
 

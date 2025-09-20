@@ -31,6 +31,21 @@ function get_all_post($post_type_name = 'post'){
 }
 
 
+// get cat slug and name 
+function artly_get_cat_data($categories = [],$delimeter = ' ',$term = 'slug'){
+   $slugs = [];
+   foreach($categories as $cat){
+       if ($term == 'slug'){
+          array_push($slugs, $cat->slug);
+       }
+       if ($term == 'name'){
+           $slugs[] =  $cat->name;
+       }
+   }
+   return implode($delimeter, $slugs);
+}
+
+
 
 /**
 * Sanitize SVG markup for front-end display.
