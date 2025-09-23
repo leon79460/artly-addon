@@ -144,7 +144,6 @@ class Plugin {
 	}
 
 
-
 	// widget category create 
 	public function arlty_add_widget_categories( $harry_add_cat_manager ) {
 		$harry_add_cat_manager->add_category(
@@ -157,7 +156,7 @@ class Plugin {
 	}
 
 
-	// Custom icon code
+// Custom icon code
 public function artly_add_custom_icons_tab($tabs = array()){
 
 	// Append new icons
@@ -187,18 +186,51 @@ public function artly_add_custom_icons_tab($tabs = array()){
 
 		// Append flaticon fonts icons
 		$flat_icons = array(
+	'flaticon-concentration',
+	'flaticon-sharing',
+	'flaticon-diagonal',
 	'flaticon-search',
-	'flaticon-loupe',
-	'flaticon-shopping-cart',
+	'flaticon-phone-book',
 	'flaticon-menu',
-	'flaticon-it-service',
+	'flaticon-cooperation',
 	'flaticon-right-arrow',
-	'flaticon-advertisig-agency'
+	'flaticon-connections',
+	'flaticon-merging',
+	'flaticon-quotes',
+	'flaticon-quotes',
+	'flaticon-next-button',
+	'flaticon-geometric',
+	'flaticon-geometric-1',
+	'flaticon-geometric-2',
+	'flaticon-geometric-3 ',
+	'flaticon-geometric-4 ',
+	'flaticon-triangle ',
+	'flaticon-geometric-5',
+	'flaticon-3d-shapes ',
+	'flaticon-geometric-6 ',
+	'flaticon-geometric-7 ',
+	'flaticon-geometric-8 ',
+	'flaticon-megaphone ',
+	'flaticon-idea ',
+	'flaticon-contract ',
+	'flaticon-idea-1 ',
+	'flaticon-customer-feedback',
+	'flaticon-solution',
+	'flaticon-flag',
+	'flaticon-telemarketer',
+	'flaticon-networking',
+	'flaticon-computer',
+	'flaticon-vulnerability',
+	'flaticon-half',
+	'flaticon-map-location',
+	'flaticon-chat',
+	'flaticon-call',
+	'flaticon-quotation-marks',
 	);
 
 	$tabs['tp-flaticon-icons'] = array(
 		'name' => 'tp-flaticon-icons',
-		'label' => esc_html__('AL - Flaticons', 'tpcore'),
+		'label' => esc_html__('Artly - Flaticons', 'tpcore'),
 		'labelIcon' => 'tp-icon',
 		'prefix' => '',
 		'displayPrefix' => 'tp',

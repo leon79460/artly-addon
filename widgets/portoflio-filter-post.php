@@ -232,7 +232,6 @@ class Artly_Portfolio_Post extends Widget_Base {
 	protected function render() {
 		$settings = $this->get_settings_for_display();
 
-
 		$args = array(
 			'post_type' => 'portfolio',
 			'posts_per_page' => $settings['post_per_page'],
@@ -241,7 +240,6 @@ class Artly_Portfolio_Post extends Widget_Base {
 			'post__in' => $settings['post_include'],
 			'post__not_in' => $settings['post_exclude'],
 		);
-
 
 		if(!empty($settings['category_include'] ) ){
 				$args['tax_query'] = array(
@@ -253,7 +251,6 @@ class Artly_Portfolio_Post extends Widget_Base {
 				),
 			);
 		}	
-
 
 		$query = new \WP_Query( $args );
 		
