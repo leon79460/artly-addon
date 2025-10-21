@@ -95,6 +95,30 @@ class Artly_Fact extends Widget_Base {
 	// Register the controls for the widget
 	protected function register_controls_section() {
 
+
+		$this->start_controls_section(
+			'fact_selection_section',
+			[
+				'label' => esc_html__( 'Design Style', 'artly-core' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout Style', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'style-1',
+				'options' => [
+					'style-1' => esc_html__( 'Layout 1', 'textdomain' ),
+					'style-2'  => esc_html__( 'Layout 2', 'textdomain' ),
+					],
+			]
+		);
+
+		$this->end_controls_section();
+
 		$this->start_controls_section(
 			'fact_section',
 			[
@@ -203,6 +227,28 @@ class Artly_Fact extends Widget_Base {
 				]
 		);
 		$this->end_controls_section();
+
+		$this->start_controls_section(
+			'artly_image_section',
+			[
+				'label' => __( 'Image', 'artly-core' ),
+				'condition' => [
+					'layout' => 'style-2',
+				],
+			]
+		);
+
+		$this->add_control(
+			'artly_fact_image',
+			[
+				'label' => esc_html__( 'Choose Image', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::MEDIA,
+				'default' => [
+					'url' => \Elementor\Utils::get_placeholder_image_src(),
+				],
+			]
+		);
+		$this->end_controls_section();
 	}
 
 	// Style the widget
@@ -248,19 +294,58 @@ class Artly_Fact extends Widget_Base {
 
 		?>
 
-		<div class="tp-fact-area tp-nblue-bg pt-100 pb-70" style="background-image: url('<?php echo esc_url($settings['artly_image']['url']); ?>');">
 
+   <?php if($settings['layout'] == 'style-2' ) : ?>
+
+					<div class="tp-fact-area tp-nblue-bg pt-130 pb-130" style="background-image: url('<?php echo esc_url($settings['artly_image']['url']); ?>');">
+            <div class="container">
+							<div class="row">
+									<div class="col-xl-6 col-lg-7">
+											<div class="row">
+				              	<?php foreach($settings['fact_list'] as $item ) : ?>
+													<div class="col-lg-6 col-md-6">
+															<div class="tpfact text-center text-lg-start mb-40">
+																	<div class="tpfact__icon">
+																		<?php if($item['select_icon_type'] == 'image') : ?> 
+																			<span><img src="<?php echo esc_url($item['fact_image']['url']); ?>" alt=""></span>
+																			<?php elseif($item['select_icon_type'] == 'icon') : ?>
+																			<span><?php \Elementor\Icons_Manager::render_icon( $item['fact_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+																		<?php endif; ?>
+																	</div>
+																	<div class="tpfact__text">
+																			<h4 class="tpfact__title mb-30"><?php echo esc_html($item['fact_name']); ?></h4>
+																			<span><?php echo esc_html($item['fact_number']); ?></span>
+																	</div>
+															</div>
+													</div>
+													<?php endforeach; ?>	
+											</div>
+									</div>
+									<div class="col-xl-6 col-lg-5">
+											<div class="tp-fact-img br-15 wow img-custom-anim-top" data-wow-duration="1s" data-wow-delay="0.3s">
+													<img src="<?php echo esc_url($settings['artly_fact_image']['url']); ?>" alt="">
+											</div>
+									</div>
+								</div>
+							</div>
+					</div>
+
+		<?php else : ?>
+
+		<div class="tp-fact-area tp-nblue-bg pt-100 pb-70" style="background-image: url('<?php echo esc_url($settings['artly_image']['url']); ?>');">
 			<div class="container">
 				<div class="custom-row">
 					<?php foreach($settings['fact_list'] as $item ) : ?>
 						<div class="cols">
 							<div class="tpfact text-center text-lg-start mb-40">
 								<div class="tpfact__icon">
+
 									<?php if($item['select_icon_type'] == 'image') : ?> 
 										<span><img src="<?php echo esc_url($item['fact_image']['url']); ?>" alt=""></span>
 									<?php elseif($item['select_icon_type'] == 'icon') : ?>
 										<span><?php \Elementor\Icons_Manager::render_icon( $item['fact_icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
 									<?php endif; ?>
+
 								</div>
 								<div class="tpfact__text">
 									<h4 class="tpfact__title mb-30"><?php echo esc_html($item['fact_name']); ?></h4>
@@ -272,6 +357,8 @@ class Artly_Fact extends Widget_Base {
 				</div>
 			</div>
 		</div>
+
+		<?php endif; ?>
 
 		<?php 
 	}

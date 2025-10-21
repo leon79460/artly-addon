@@ -104,11 +104,39 @@ class Artly_FAQ extends Widget_Base {
 	// register_controls_section
 	protected function register_controls_section() {
 
+
+
+		$this->start_controls_section(
+			'faq_selection_section',
+			[
+				'label' => esc_html__( 'Design Style', 'artly-core' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout Style', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'style-1',
+				'options' => [
+					'style-1' => esc_html__( 'Layout 1', 'textdomain' ),
+					'style-2'  => esc_html__( 'Layout 2', 'textdomain' ),
+					],
+			]
+		);
+
+		$this->end_controls_section();
+
 			$this->start_controls_section(
 			'heading_section',
 			[
 				'label' => __( 'Title and Content', 'artly-core' ),
-			]
+				'condition' => [
+					'layout' => 'style-1',
+				],
+			],
 		);
 
 		$this->add_control(
@@ -202,6 +230,9 @@ class Artly_FAQ extends Widget_Base {
 			[
 				'label' => esc_html__( 'Image', 'textdomain' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+				'condition' => [
+					'layout' => 'style-1',
+				],
 			]
 		);
 
@@ -267,6 +298,42 @@ class Artly_FAQ extends Widget_Base {
 
 		?>
 
+  <?php if($settings['layout'] == 'style-2' ) : ?>
+
+			<section class="tp-faq-page-area pt-120 pb-120">
+					<div class="container">
+							<div class="row justify-content-center">
+									<div class="col-xl-8">
+											<div class="tp-faq-page">
+													<div class="accordion" id="accordionExample">
+
+													<?php foreach($settings['faq_list'] as $key=> $item) : 
+														$button_class = ($key == 0) ? '' : 'collapsed';
+														$show = ($key == 0) ? 'show' : '' ;
+														?>
+															<div class="tp-accordion-item mb-20">
+																<h2 class="accordion-header">
+																	<button class="tp-accordion-button" type="button" <?php echo esc_attr($button_class); ?> data-bs-toggle="collapse" data-bs-target="#collapseOne-<?php echo esc_attr($key); ?>" aria-expanded="true" aria-controls="collapseOne-<?php echo esc_attr($key); ?>">
+																			<?php echo esc_html($item['faq_title']); ?>
+																			<span><i class="far fa-arrow-down"></i></span>
+																	</button>
+																</h2>
+																<div id="collapseOne-<?php echo esc_attr($key); ?>" class="tp-accordion-collapse collapse <?php echo esc_attr($show); ?>" data-bs-parent="#accordionExample">
+																	<div class="tp-accordion-body">
+																		<p><?php echo esc_html($item['faq_content']); ?></p>
+																	</div>
+																</div>
+															</div>
+														<?php endforeach; ?>
+													</div>
+											</div>
+									</div>
+							</div>
+					</div>
+			</section>
+
+		<?php else : ?>
+
 		<div class="tp-faq-area mt-130 mb-130 p-relative">
 				<div class="tpfaq-bg tpfaq-bg-right wow img-custom-anim-right" data-wow-duration="1.5s" data-wow-delay="0.2s" style="background-image: url(<?php echo esc_url($settings['image'] ['url']); ?>);" alt="">">
 				</div>
@@ -281,6 +348,7 @@ class Artly_FAQ extends Widget_Base {
 												</div>
 
 												<div class="accordion" id="accordionExample">
+													
 													<?php foreach($settings['faq_list'] as $key=> $item) : 
 														$button_class = ($key == 0) ? '' : 'collapsed';
 														$show = ($key == 0) ? 'show' : '' ;
@@ -299,6 +367,7 @@ class Artly_FAQ extends Widget_Base {
 															</div>
 														</div>
 														<?php endforeach; ?>
+														
 												</div>
 										</div>
 								</div>
@@ -306,6 +375,7 @@ class Artly_FAQ extends Widget_Base {
 				</div>
 		</div>
 
+		<?php endif; ?>
 
 		<?php 
 

@@ -140,7 +140,7 @@ class Artly_Skill extends Widget_Base {
 		$this->start_controls_section(
 			'faq_section',
 			[
-				'label' => esc_html__( 'Faq List', 'textdomain' ),
+				'label' => esc_html__( 'Progress List', 'textdomain' ),
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);

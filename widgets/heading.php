@@ -132,6 +132,33 @@ class Artly_Heading extends Widget_Base {
 			]
 		);
 
+		$this->add_control(
+			'text_align',
+			[
+				'label' => esc_html__( 'Alignment', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::CHOOSE,
+				'options' => [
+					'left' => [
+						'title' => esc_html__( 'Left', 'textdomain' ),
+						'icon' => 'eicon-text-align-left',
+					],
+					'center' => [
+						'title' => esc_html__( 'Center', 'textdomain' ),
+						'icon' => 'eicon-text-align-center',
+					],
+					'right' => [
+						'title' => esc_html__( 'Right', 'textdomain' ),
+						'icon' => 'eicon-text-align-right',
+					],
+				],
+				'default' => 'center',
+				'toggle' => true,
+				'selectors' => [
+					'{{WRAPPER}} .al-alignment-el' => 'text-align: {{VALUE}};',
+				],
+			]
+		);
+
 		$this->end_controls_section();
 
 	}
@@ -159,7 +186,7 @@ class Artly_Heading extends Widget_Base {
 					'capitalize' => __( 'Capitalize', 'artly-core' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .title' => 'text-transform: {{VALUE}};',
+					'{{WRAPPER}} .al-alignment-el' => 'text-transform: {{VALUE}};',
 				],
 			]
 		);
@@ -181,7 +208,7 @@ class Artly_Heading extends Widget_Base {
 
 		?>
 
-		<div class="tp-section-title-wrapper ">
+		<div class="tp-section-title-wrapper al-alignment-el">
 			<?php if(!empty($settings['artly_title'])) : ?>
 			<h2 class="tp-section-title mb-20 "><?php echo artly_core_kses($settings['artly_title']); ?></h2>
 			<?php endif; ?>	
