@@ -36,11 +36,37 @@ class Artly_Team extends Widget_Base {
 	// register_controls_section
 	protected function register_controls_section() {
 
+			// Team Selection section 
+		$this->start_controls_section(
+			'team_selection_section',
+			[
+				'label' => esc_html__( 'Team Design Style', 'artly-core' ),
+				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
+			]
+		);
+
+		$this->add_control(
+			'layout',
+			[
+				'label' => esc_html__( 'Layout Style', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::SELECT,
+				'default' => 'style-2',
+				'options' => [
+					'style-1' => esc_html__( 'Slider Team', 'textdomain' ),
+					'style-2'  => esc_html__( 'Grid Team', 'textdomain' ),
+					],
+			]
+		);
+
+		$this->end_controls_section();
 
 		$this->start_controls_section(
 			'heading_section',
 			[
-				'label' => __( 'Title and Content', 'artly-core' ),
+				'label' => __( 'Title ', 'artly-core' ),
+				'condition' => [
+					'layout' => 'style-1',
+				],
 			]
 		);
 
@@ -164,31 +190,6 @@ class Artly_Team extends Widget_Base {
 
 		$this->end_controls_section();
 
-		
-	// Team Selection section 
-		$this->start_controls_section(
-			'team_selection_section',
-			[
-				'label' => esc_html__( 'Team Design Style', 'artly-core' ),
-				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
-			]
-		);
-
-		$this->add_control(
-			'layout',
-			[
-				'label' => esc_html__( 'Layout Style', 'textdomain' ),
-				'type' => \Elementor\Controls_Manager::SELECT,
-				'default' => 'style-2',
-				'options' => [
-					'style-1' => esc_html__( 'Slider Team', 'textdomain' ),
-					'style-2'  => esc_html__( 'Grid Team', 'textdomain' ),
-					],
-			]
-		);
-
-		$this->end_controls_section();
-
 	}
 
 	// style_tab_content 
@@ -282,6 +283,7 @@ class Artly_Team extends Widget_Base {
 			<div class="container-fluid">
 				<div class="swiper tp-team-active">
 					<div class="swiper-wrapper">
+
 						<?php foreach($settings['team_list'] as $item) : ?>
 							<div class="swiper-slide">
 								<div class="tpteam">
@@ -306,6 +308,7 @@ class Artly_Team extends Widget_Base {
 								</div>
 							</div>
 						<?php endforeach; ?>
+						
 					</div>
 				</div>
 			</div>

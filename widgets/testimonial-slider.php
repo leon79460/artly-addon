@@ -271,7 +271,7 @@ class Artly_Testimonial extends Widget_Base {
 														<div class="tp-testimonial-author mt-60">
 																<h4 class="tp-testimonial-name"><?php echo esc_html($item['testimonial_name']); ?></h4>
 																<span class="tp-testimonial-desig"> <span></span> <?php echo esc_html($item['testimonial_bio']); ?> </span>
-														</div>    
+														</div>
 												</div>
 											</div>
 											<?php endforeach; ?>

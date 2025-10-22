@@ -196,6 +196,17 @@ class Artly_Icon_Box extends Widget_Base {
 			]
 		);
 
+		$repeater->add_control(
+			'list_color',
+			[
+				'label' => esc_html__( 'List Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} {{CURRENT_ITEM}}' => 'color: {{VALUE}}',
+				],
+			]
+		);
+
 		// Add repeater field for the list
 		$this->add_control(
 			'icon_title_list',
@@ -223,30 +234,104 @@ class Artly_Icon_Box extends Widget_Base {
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Style', 'artly-core' ),
+				'label' => __( 'Content Style', 'artly-core' ),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
 		$this->add_control(
-			'text_transform',
+		'text_align',
+		[
+			'label' => esc_html__( 'Alignment', 'textdomain' ),
+			'type' => \Elementor\Controls_Manager::CHOOSE,
+			'options' => [
+				'left' => [
+					'title' => esc_html__( 'Left', 'textdomain' ),
+					'icon' => 'eicon-text-align-left',
+				],
+				'center' => [
+					'title' => esc_html__( 'Center', 'textdomain' ),
+					'icon' => 'eicon-text-align-center',
+				],
+				'right' => [
+					'title' => esc_html__( 'Right', 'textdomain' ),
+					'icon' => 'eicon-text-align-right',
+				],
+				'justify' => [
+					'title' => esc_html__( 'Justified', 'textdomain' ),
+					'icon' => 'eicon-text-align-justify',
+				],
+			],
+			'default' => 'center',
+			'toggle' => true,
+			'selectors' => [
+				'{{WRAPPER}} .al-alignment-el' => 'text-align: {{VALUE}};',
+			],
+		]
+	);
+
+	$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
 			[
-				'label' => __( 'Text Transform', 'artly-core' ),
-				'type' => Controls_Manager::SELECT,
-				'default' => '',
-				'options' => [
-					'' => __( 'None', 'artly-core' ),
-					'uppercase' => __( 'UPPERCASE', 'artly-core' ),
-					'lowercase' => __( 'lowercase', 'artly-core' ),
-					'capitalize' => __( 'Capitalize', 'artly-core' ),
-				],
-				'selectors' => [
-					'{{WRAPPER}} .title' => 'text-transform: {{VALUE}};',
-				],
+				'name' => 'title_typography',
+				'selector' => '{{WRAPPER}} .al-title-el',
 			]
 		);
 
-		$this->end_controls_section();
+	$this->add_control(
+		'title_color',
+		[
+			'label' => esc_html__( 'Title Color', 'textdomain' ),
+			'type' => \Elementor\Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .al-title-el' => 'color: {{VALUE}}',
+			],
+		]
+	);
+
+	$this->add_control(
+		'description_color',
+		[
+			'label' => esc_html__( 'Details Color', 'textdomain' ),
+			'type' => \Elementor\Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .al-description-el' => 'color: {{VALUE}}',
+			],
+		]
+	);
+
+	$this->add_group_control(
+			\Elementor\Group_Control_Typography::get_type(),
+			[
+				'name' => 'description_typography',
+				'selector' => '{{WRAPPER}} .al-description-el',
+			]
+		);
+
+
+	$this->end_controls_section();
+
+
+	$this->start_controls_section(
+		'iocn_style',
+		[
+			'label' => __( 'Icon', 'artly-core' ),
+			'tab' => Controls_Manager::TAB_STYLE,
+		]
+	);
+
+	$this->add_control(
+		'icon_color',
+		[
+			'label' => esc_html__( 'Icon Color', 'textdomain' ),
+			'type' => \Elementor\Controls_Manager::COLOR,
+			'selectors' => [
+				'{{WRAPPER}} .al-icon-el' => 'color: {{VALUE}}',
+			],
+		]
+	);
+
+	$this->end_controls_section();
 	}
 
 	/**
@@ -261,21 +346,21 @@ class Artly_Icon_Box extends Widget_Base {
 
 		// Loop through each repeater item (subheading)
 		?>
-		<div class="tp-contact-info mb-30 text-center wow tpFadeInUp" data-wow-duration="1s" data-wow-delay="0.2s">
+		<div class="tp-contact-info   wow tpFadeInUp al-alignment-el" data-wow-duration="1s" data-wow-delay="0.2s">
 			<div class="tp-contact-info-icon mb-10">
 
 				<?php if($settings['select_icon_type'] == 'image') : ?>
 					<span><img src="<?php echo esc_url($settings['icon_image']['url']); ?>" alt=""></span>
 					<?php elseif($settings['select_icon_type'] == 'icon') : ?>
-				<span><?php \Elementor\Icons_Manager::render_icon( $settings['icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
+				<span class="al-icon-el"><?php \Elementor\Icons_Manager::render_icon( $settings['icon'], [ 'aria-hidden' => 'true' ] ); ?></span>
 				<?php endif; ?>
 
 			</div>
 			<div class="tp-contact-info-text">
-				<span class="mb-10 d-block"><?php echo artly_core_kses($settings['main_title']); ?></span>
+				<span class="mb-10 d-block al-title-el"><?php echo artly_core_kses($settings['main_title']); ?></span>
 				
 				<?php foreach( $settings['icon_title_list'] as $item ) : ?>
-					<p>
+					<p class=" elementor-repeater-item-<?php echo esc_attr( $item['_id'] ); ?>">
 						<!-- Check if URL is provided, otherwise display as normal text -->
 						<?php if( ! empty( $item['artly_heading_url']['url'] ) ) : ?>
 							<a href="<?php echo esc_url($item['artly_heading_url']['url']); ?>"

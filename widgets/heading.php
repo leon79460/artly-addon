@@ -117,6 +117,9 @@ class Artly_Heading extends Widget_Base {
 				'type' => Controls_Manager::TEXT,
 				'default' => esc_html__( 'Popular services', 'artly-core' ),
 				'label_block' => true,
+				'dynamic' => [
+			  'active' => true,
+		   ],
 			]
 		);
 
@@ -132,7 +135,21 @@ class Artly_Heading extends Widget_Base {
 			]
 		);
 
-		$this->add_control(
+		$this->end_controls_section();
+
+	}
+
+	// style_tab_content 
+	protected function style_tab_content() {
+		$this->start_controls_section(
+			'section_style',
+			[
+				'label' => __( 'Artly Heading Style', 'artly-core' ),
+				'tab' => Controls_Manager::TAB_STYLE,
+			]
+		);
+
+			$this->add_control(
 			'text_align',
 			[
 				'label' => esc_html__( 'Alignment', 'textdomain' ),
@@ -150,6 +167,10 @@ class Artly_Heading extends Widget_Base {
 						'title' => esc_html__( 'Right', 'textdomain' ),
 						'icon' => 'eicon-text-align-right',
 					],
+					'justify' => [
+						'title' => esc_html__( 'Justified', 'textdomain' ),
+						'icon' => 'eicon-text-align-justify',
+					],
 				],
 				'default' => 'center',
 				'toggle' => true,
@@ -159,17 +180,24 @@ class Artly_Heading extends Widget_Base {
 			]
 		);
 
-		$this->end_controls_section();
-
-	}
-
-	// style_tab_content 
-	protected function style_tab_content() {
-		$this->start_controls_section(
-			'section_style',
+		$this->add_control(
+			'title_color',
 			[
-				'label' => __( 'Style', 'artly-core' ),
-				'tab' => Controls_Manager::TAB_STYLE,
+				'label' => esc_html__( 'Title Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .al-title-el' => 'color: {{VALUE}}',
+				],
+			]
+		);
+		$this->add_control(
+			'description_color',
+			[
+				'label' => esc_html__( 'Description Color', 'textdomain' ),
+				'type' => \Elementor\Controls_Manager::COLOR,
+				'selectors' => [
+					'{{WRAPPER}} .al-description-el' => 'color: {{VALUE}}',
+				],
 			]
 		);
 
@@ -186,7 +214,7 @@ class Artly_Heading extends Widget_Base {
 					'capitalize' => __( 'Capitalize', 'artly-core' ),
 				],
 				'selectors' => [
-					'{{WRAPPER}} .al-alignment-el' => 'text-transform: {{VALUE}};',
+					'{{WRAPPER}} .al-title-el' => 'text-transform: {{VALUE}};',
 				],
 			]
 		);
@@ -210,10 +238,10 @@ class Artly_Heading extends Widget_Base {
 
 		<div class="tp-section-title-wrapper al-alignment-el">
 			<?php if(!empty($settings['artly_title'])) : ?>
-			<h2 class="tp-section-title mb-20 "><?php echo artly_core_kses($settings['artly_title']); ?></h2>
+			<h2 class="tp-section-title al-title-el mb-20 "><?php echo artly_core_kses($settings['artly_title']); ?></h2>
 			<?php endif; ?>	
 			<?php if(!empty($settings['artly_content'])) : ?>
-			<p><?php echo artly_core_kses($settings['artly_content']); ?></p>
+			<p class="al-description-el"><?php echo artly_core_kses($settings['artly_content']); ?></p>
 			<?php endif; ?>	
 		</div>
 
