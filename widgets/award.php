@@ -159,17 +159,17 @@ class Artly_Award extends Widget_Base {
 					[
 						'award_name' => esc_html__( 'Dribbble winner', 'artly-core' ),
 					],
-				],
+				], 
 				'title_field' => '{{{ award_name }}}',
 			]
 		);
 
-		$this->end_controls_section();
+		$this->end_controls_section(); 
 
 		$this->start_controls_section(
 			'award_image_section',
 			[
-				'label' => esc_html__( 'Image Shape', 'artly-core' ),
+				'label' => esc_html__( 'Image Shape', 'artly-core' ), 
 				'tab' => \Elementor\Controls_Manager::TAB_CONTENT,
 			]
 		);
