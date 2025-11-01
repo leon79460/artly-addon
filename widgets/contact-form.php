@@ -1,10 +1,11 @@
 <?php
+
 namespace Artly_Core_Help\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * Artly Core
@@ -13,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @since 1.0.0
  */
-class Artly_Contact_Form extends Widget_Base {
+class Artly_Contact_Form extends Widget_Base
+{
 
 	/**
 	 * Retrieve the widget name.
@@ -24,7 +26,8 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @return string Widget name.
 	 */
-	public function get_name() {
+	public function get_name()
+	{
 		return 'artly-contact-form';
 	}
 
@@ -37,8 +40,9 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @return string Widget title.
 	 */
-	public function get_title() {
-		return __( 'Artly Contact Form', 'artly-core' );
+	public function get_title()
+	{
+		return __('Artly Contact Form', 'artly-core');
 	}
 
 	/**
@@ -50,7 +54,8 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @return string Widget icon.
 	 */
-	public function get_icon() {
+	public function get_icon()
+	{
 		return 'eicon-posts-ticker';
 	}
 
@@ -68,8 +73,9 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @return array Widget categories.
 	 */
-	public function get_categories() {
-		return [ 'arlty-category' ];
+	public function get_categories()
+	{
+		return ['arlty-category'];
 	}
 
 	/**
@@ -83,8 +89,9 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @return array Widget scripts dependencies.
 	 */
-	public function get_script_depends() {
-		return [ 'artly-core' ];
+	public function get_script_depends()
+	{
+		return ['artly-core'];
 	}
 
 	/**
@@ -96,40 +103,42 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function register_controls() {
+	protected function register_controls()
+	{
 		$this->register_controls_section();
 		$this->style_tab_content();
 	}
 
 	// register_controls_section
-	protected function register_controls_section() {
+	protected function register_controls_section()
+	{
 		$this->start_controls_section(
 			'contact_form_section',
 			[
-				'label' => __( 'Title and Content', 'artly-core' ),
+				'label' => __('Title and Content', 'artly-core'),
 			]
 		);
 
 		$this->add_control(
 			'artly_form_shortcode',
 			[
-				'label' => __( 'Form Shortcode', 'artly-core' ),
+				'label' => __('Form Shortcode', 'artly-core'),
 				'type' => Controls_Manager::TEXT,
 				'label_block' => true,
-				'placeholder' => esc_html__( ' Shortcode Here', 'artly-core'),
+				'placeholder' => esc_html__(' Shortcode Here', 'artly-core'),
 			]
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	// style_tab_content 
-	protected function style_tab_content() {
+	protected function style_tab_content()
+	{
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Style', 'artly-core' ),
+				'label' => __('Style', 'artly-core'),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
@@ -137,14 +146,14 @@ class Artly_Contact_Form extends Widget_Base {
 		$this->add_control(
 			'text_transform',
 			[
-				'label' => __( 'Text Transform', 'artly-core' ),
+				'label' => __('Text Transform', 'artly-core'),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'artly-core' ),
-					'uppercase' => __( 'UPPERCASE', 'artly-core' ),
-					'lowercase' => __( 'lowercase', 'artly-core' ),
-					'capitalize' => __( 'Capitalize', 'artly-core' ),
+					'' => __('None', 'artly-core'),
+					'uppercase' => __('UPPERCASE', 'artly-core'),
+					'lowercase' => __('lowercase', 'artly-core'),
+					'capitalize' => __('Capitalize', 'artly-core'),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .title' => 'text-transform: {{VALUE}};',
@@ -164,19 +173,19 @@ class Artly_Contact_Form extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function render() {
+	protected function render()
+	{
 		$settings = $this->get_settings_for_display();
 
-		?>
+?>
 
 		<div class="contact-form-box">
-				<?php echo do_shortcode($settings['artly_form_shortcode']); ?>
+			<?php echo do_shortcode($settings['artly_form_shortcode']); ?>
 		</div>
 
-		<?php 
+<?php
 	}
-
 }
 
 
-$widgets_manager->register( new Artly_Contact_Form() );
+$widgets_manager->register(new Artly_Contact_Form());

@@ -1,10 +1,11 @@
 <?php
+
 namespace Artly_Core_Help\Widgets;
 
 use Elementor\Widget_Base;
 use Elementor\Controls_Manager;
 
-if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
+if (! defined('ABSPATH')) exit; // Exit if accessed directly
 
 /**
  * Artly Core
@@ -13,7 +14,8 @@ if ( ! defined( 'ABSPATH' ) ) exit; // Exit if accessed directly
  *
  * @since 1.0.0
  */
-class Artly_Heading extends Widget_Base {
+class Artly_Heading extends Widget_Base
+{
 
 	/**
 	 * Retrieve the widget name.
@@ -24,7 +26,8 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @return string Widget name.
 	 */
-	public function get_name() {
+	public function get_name()
+	{
 		return 'artly-heading';
 	}
 
@@ -37,8 +40,9 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @return string Widget title.
 	 */
-	public function get_title() {
-		return __( 'Artly Heading', 'artly-core' );
+	public function get_title()
+	{
+		return __('Artly Heading', 'artly-core');
 	}
 
 	/**
@@ -50,7 +54,8 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @return string Widget icon.
 	 */
-	public function get_icon() {
+	public function get_icon()
+	{
 		return 'eicon-posts-ticker';
 	}
 
@@ -68,8 +73,9 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @return array Widget categories.
 	 */
-	public function get_categories() {
-		return [ 'arlty-category' ];
+	public function get_categories()
+	{
+		return ['arlty-category'];
 	}
 
 	/**
@@ -83,8 +89,9 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @return array Widget scripts dependencies.
 	 */
-	public function get_script_depends() {
-		return [ 'artly-core' ];
+	public function get_script_depends()
+	{
+		return ['artly-core'];
 	}
 
 	/**
@@ -96,79 +103,81 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function register_controls() {
+	protected function register_controls()
+	{
 		$this->register_controls_section();
 		$this->style_tab_content();
 	}
 
 	// register_controls_section
-	protected function register_controls_section() {
+	protected function register_controls_section()
+	{
 		$this->start_controls_section(
 			'heading_section',
 			[
-				'label' => __( 'Title and Content', 'artly-core' ),
+				'label' => __('Title and Content', 'artly-core'),
 			]
 		);
 
 		$this->add_control(
 			'artly_title',
 			[
-				'label' => __( 'Main Title', 'artly-core' ),
+				'label' => __('Main Title', 'artly-core'),
 				'type' => Controls_Manager::TEXT,
-				'default' => esc_html__( 'Popular services', 'artly-core' ),
+				'default' => esc_html__('Popular services', 'artly-core'),
 				'label_block' => true,
 				'dynamic' => [
-			  'active' => true,
-		   ],
+					'active' => true,
+				],
 			]
 		);
 
 		$this->add_control(
 			'artly_content',
 			[
-				'label' => esc_html__( 'Description', 'artly-core' ),
+				'label' => esc_html__('Description', 'artly-core'),
 				'type' => \Elementor\Controls_Manager::TEXTAREA,
 				'rows' => 7,
-				'default' => esc_html__( 'Per ipsum ultrices sollicitudin iaculis platea facilisi semper aliquam up
-         senectus cursus vivamus volutpat penatibus', 'artly-core' ),
-				'placeholder' => esc_html__( 'Type your description here', 'artly-core' ),
+				'default' => esc_html__('Per ipsum ultrices sollicitudin iaculis platea facilisi semper aliquam up
+         senectus cursus vivamus volutpat penatibus', 'artly-core'),
+				'placeholder' => esc_html__('Type your description here', 'artly-core'),
 			]
 		);
 
 		$this->end_controls_section();
-
 	}
 
 	// style_tab_content 
-	protected function style_tab_content() {
+	protected function style_tab_content()
+	{
 		$this->start_controls_section(
 			'section_style',
 			[
-				'label' => __( 'Artly Heading Style', 'artly-core' ),
+				'label' => __('Artly Heading Style', 'artly-core'),
 				'tab' => Controls_Manager::TAB_STYLE,
 			]
 		);
 
-			$this->add_control(
+		$this->add_control(
 			'text_align',
 			[
-				'label' => esc_html__( 'Alignment', 'textdomain' ),
+				'label' => esc_html__('Alignment', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::CHOOSE,
 				'options' => [
 					'left' => [
-						'title' => esc_html__( 'Left', 'textdomain' ),
+						'title' => esc_html__('Left', 'textdomain'),
 						'icon' => 'eicon-text-align-left',
 					],
 					'center' => [
-						'title' => esc_html__( 'Center', 'textdomain' ),
+						'title' => esc_html__('Center', 'textdomain'),
 						'icon' => 'eicon-text-align-center',
 					],
 					'right' => [
-						'title' => esc_html__( 'Right', 'textdomain' ),
+						'title' => esc_html__('Right', 'textdomain'),
 						'icon' => 'eicon-text-align-right',
 					],
 					'justify' => [
-						'title' => esc_html__( 'Justified', 'textdomain' ),
+						'title' => esc_html__('Justified', 'textdomain'),
 						'icon' => 'eicon-text-align-justify',
 					],
 				],
@@ -183,7 +192,7 @@ class Artly_Heading extends Widget_Base {
 		$this->add_control(
 			'title_color',
 			[
-				'label' => esc_html__( 'Title Color', 'textdomain' ),
+				'label' => esc_html__('Title Color', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .al-title-el' => 'color: {{VALUE}}',
@@ -193,7 +202,7 @@ class Artly_Heading extends Widget_Base {
 		$this->add_control(
 			'description_color',
 			[
-				'label' => esc_html__( 'Description Color', 'textdomain' ),
+				'label' => esc_html__('Description Color', 'textdomain'),
 				'type' => \Elementor\Controls_Manager::COLOR,
 				'selectors' => [
 					'{{WRAPPER}} .al-description-el' => 'color: {{VALUE}}',
@@ -204,14 +213,14 @@ class Artly_Heading extends Widget_Base {
 		$this->add_control(
 			'text_transform',
 			[
-				'label' => __( 'Text Transform', 'artly-core' ),
+				'label' => __('Text Transform', 'artly-core'),
 				'type' => Controls_Manager::SELECT,
 				'default' => '',
 				'options' => [
-					'' => __( 'None', 'artly-core' ),
-					'uppercase' => __( 'UPPERCASE', 'artly-core' ),
-					'lowercase' => __( 'lowercase', 'artly-core' ),
-					'capitalize' => __( 'Capitalize', 'artly-core' ),
+					'' => __('None', 'artly-core'),
+					'uppercase' => __('UPPERCASE', 'artly-core'),
+					'lowercase' => __('lowercase', 'artly-core'),
+					'capitalize' => __('Capitalize', 'artly-core'),
 				],
 				'selectors' => [
 					'{{WRAPPER}} .al-title-el' => 'text-transform: {{VALUE}};',
@@ -231,24 +240,24 @@ class Artly_Heading extends Widget_Base {
 	 *
 	 * @access protected
 	 */
-	protected function render() {
+	protected function render()
+	{
 		$settings = $this->get_settings_for_display();
 
-		?>
+?>
 
 		<div class="tp-section-title-wrapper al-alignment-el">
-			<?php if(!empty($settings['artly_title'])) : ?>
-			<h2 class="tp-section-title al-title-el mb-20 "><?php echo artly_core_kses($settings['artly_title']); ?></h2>
-			<?php endif; ?>	
-			<?php if(!empty($settings['artly_content'])) : ?>
-			<p class="al-description-el"><?php echo artly_core_kses($settings['artly_content']); ?></p>
-			<?php endif; ?>	
+			<?php if (!empty($settings['artly_title'])) : ?>
+				<h2 class="tp-section-title al-title-el mb-20 "><?php echo artly_core_kses($settings['artly_title']); ?></h2>
+			<?php endif; ?>
+			<?php if (!empty($settings['artly_content'])) : ?>
+				<p class="al-description-el"><?php echo artly_core_kses($settings['artly_content']); ?></p>
+			<?php endif; ?>
 		</div>
 
-		<?php 
+<?php
 	}
-
 }
 
 
-$widgets_manager->register( new Artly_Heading() );
+$widgets_manager->register(new Artly_Heading());
